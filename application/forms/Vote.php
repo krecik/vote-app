@@ -20,12 +20,11 @@ class Application_Form_Vote extends Zend_Form
                 '1' => 'Yes',
                 '0' => 'No',
             ))
-            ->addDecorator('Label', array('class' => 'radio-inline'))
             ->addDecorator('ViewHelper', array('class' => 'radio-inline'))
             ->setSeparator('');
 
         $constituencyOptions = \Model\ConstituencyQuery::create()->find();
-        $options = Array();
+        $options = Array('' => '- select -');
         foreach($constituencyOptions as $constituencyOption) {
             /* @var \Model\Constituency $constituencyOption */
             $options[$constituencyOption->getId()] = $constituencyOption->getName();
@@ -34,11 +33,13 @@ class Application_Form_Vote extends Zend_Form
         $elements['IdConstituency'] = new Zend_Form_Element_Select('IdConstituency');
         $elements['IdConstituency']->setLabel('Select Your Constituency')
             ->addValidator('NotEmpty')
+            ->setRequired(true)
             ->addMultiOptions($options)
             ->addDecorator('Label', array('class' => 'control-label'));
 
         $elements['Representative'] = new Zend_Form_Element_Text('Representative');
         $elements['Representative']->setLabel('Who are you going to vote for?')
+            ->addDecorator('ViewHelper', Array('tag' => 'div'))
             ->addDecorator('Label', array('class' => 'control-label'));
 
         $elements['Submit'] = new Zend_Form_Element_Submit('Submit');
