@@ -10,18 +10,16 @@ class Application_Form_Vote extends Zend_Form
         $this->setAttrib('enctype', 'multipart/form-data');
 
         $elements = Array();
-//        $elements['Id'] = new Zend_Form_Element_Hidden('Id');
-        $elements['IsGoingVote'] = new Zend_Form_Element_Radio('IsGoingVote');
+        $elements['IsGoingVote'] = new Zend_Form_Element_Select('IsGoingVote');
         $elements['IsGoingVote']->setLabel('Are you going to vote?')
-            ->setAttrib('class', 'input-lg')
+            ->setAttrib('class', 'form-control')
             ->setRequired(true)
             ->setAllowEmpty(false)
             ->addMultiOptions(Array(
+                '' => '- select -',
                 '1' => 'Yes',
                 '0' => 'No',
-            ))
-            ->addDecorator('ViewHelper', array('class' => 'radio-inline'))
-            ->setSeparator('');
+            ));
 
         $constituencyOptions = \Model\ConstituencyQuery::create()->find();
         $options = Array('' => '- select -');
@@ -33,17 +31,18 @@ class Application_Form_Vote extends Zend_Form
         $elements['IdConstituency'] = new Zend_Form_Element_Select('IdConstituency');
         $elements['IdConstituency']->setLabel('Select Your Constituency')
             ->addValidator('NotEmpty')
+            ->setAttrib('class', 'form-control')
             ->setRequired(true)
             ->addMultiOptions($options)
             ->addDecorator('Label', array('class' => 'control-label'));
 
         $elements['Representative'] = new Zend_Form_Element_Text('Representative');
         $elements['Representative']->setLabel('Who are you going to vote for?')
-            ->addDecorator('ViewHelper', Array('tag' => 'div'))
+            ->setAttrib('class', 'form-control col-sm-6')
             ->addDecorator('Label', array('class' => 'control-label'));
 
         $elements['Submit'] = new Zend_Form_Element_Submit('Submit');
-        $elements['Submit']->setAttrib('class', 'btn btn-primary')
+        $elements['Submit']->setAttrib('class', 'btn btn-primary btn-block')
             ->setLabel('Save Vote')
             ->addDecorator('ViewHelper');
 
