@@ -45,7 +45,14 @@
                 </tbody>
             </table>
 
-            <a href="<?php echo $this->url(Array('controller' => 'vote', 'action' => 'index', 'module' => 'default'), 'default', true); ?>" class="btn btn-default btn-block btn-lg">Vote again</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="<?php echo $this->url(Array('controller' => 'result', 'action' => 'index', 'module' => 'default'), 'default', true); ?>" class="btn btn-default btn-block btn-lg"><i class="glyphicon glyphicon-arrow-left"></i> back to results</a>
+        </div>
+        <div class="col-lg-6">
+            <a href="<?php echo $this->url(Array('controller' => 'vote', 'action' => 'index', 'module' => 'default'), 'default', true); ?>" class="btn btn-default btn-block btn-lg"><i class="glyphicon glyphicon-pencil"></i> Vote again</a>
         </div>
     </div>
 </div>
