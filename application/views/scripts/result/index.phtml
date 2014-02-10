@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h2>Total Votes</h2>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Total Votes:</th>
+                        <th>Total Going:</th>
+                        <th>Total Not Going:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php echo $this->allVotes; ?></td>
+                        <td><?php echo $this->votesGoing; ?></td>
+                        <td><?php echo ($this->allVotes - $this->votesGoing); ?></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Constituency</th>
+                    <th>Going to Vote</th>
+                    <th>Not going to Vote</th>
+                    <th>Percent</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($this->constuencies as $constituency):
+                    /* @var \Model\Constituency $constituency */
+                    ?>
+                    <tr>
+                        <td>
+                            <?php echo $constituency->getName(); ?>
+                        </td>
+                        <td>
+                            <?php
+                            $_count = $constituency->getGoingYes();
+                            echo empty($_count) ? 0 : $constituency->getGoingYes(); ?>
+                        </td>
+                        <td>
+                            <?php echo $constituency->getNotGoing(); ?>
+                        </td>
+                        <td>
+                            <?php echo number_format(($constituency->getGoingYes() / $this->allVotes) * 100, 3); ?> %
+                        </td>
+                        <td>
+                            <a href="<?php echo $this->url(Array('controller' => 'result', 'action' => 'see-votes', 'module' => 'default', 'id' => $constituency->getId()), 'default', true); ?>" class="btn btn-default">See votes</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <a href="<?php echo $this->url(Array('controller' => 'vote', 'action' => 'index', 'module' => 'default'), 'default', true); ?>" class="btn btn-default btn-block btn-lg">Vote again</a>
+        </div>
+    </div>
+</div>

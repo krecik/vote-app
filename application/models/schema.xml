@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="vote-app" defaultIdMethod="native"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="Model" package="Model">
+
+    <table name="constituency">
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+            <parameter name="Charset" value="utf8"/>
+            <parameter name="Collate" value="utf8_general_ci"/>
+        </vendor>
+        <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER"/>
+        <column name="Name" required="true" primaryString="true" type="VARCHAR" size="512"/>
+
+        <behavior name="timestampable"/>
+        <behavior name="aggregate_column">
+            <parameter name="name" value="going_yes"/>
+            <parameter name="foreign_table" value="vote"/>
+            <parameter name="expression" value="COUNT(id)"/>
+            <parameter name="condition" value="is_going_vote = true" />
+        </behavior>
+    </table>
+
+    <table name="vote">
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+            <parameter name="Charset" value="utf8"/>
+            <parameter name="Collate" value="utf8_general_ci"/>
+        </vendor>
+        <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER"/>
+        <column name="id_constituency" required="true" type="INTEGER"/>
+        <column name="is_going_vote" required="true" type="boolean" />
+        <column name="representative" required="false" type="varchar" size="200"/>
+
+        <foreign-key foreignTable="constituency" onUpdate="cascade" onDelete="cascade">
+            <reference local="id_constituency" foreign="id"/>
+        </foreign-key>
+        <behavior name="timestampable"/>
+    </table>
+
+</database>

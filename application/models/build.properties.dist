@@ -1,0 +1,14 @@
+propel.project = vote-app
+
+propel.output.dir = ${propel.project.dir}/
+propel.database = mysql
+
+propel.database.url = mysql:host=HOST;dbname=DATABASE
+propel.database.user = USER
+
+propel.database.password = PASSWORD
+
+propel.database.encoding = utf8
+
+propel.mysql.tableType = InnoDB
+propel.defaultDateFormat = %Y-%m-%d
